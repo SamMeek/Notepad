@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="ChatApp">
+
+<head>
+    <title>Chat Application</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .chat-container {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .message {
+            background-color: #f2f2f2;
+            margin: 5px;
+            border-radius: 5px;
+        }
+
+        .container {
+            margin-top: 18%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            height: 50px;
+        }
+
+        .text-box {
+            margin: 10px;
+            width: 70%;
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Style for the green button */
+        .send-button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body ng-controller="ChatController">
+
+    <div class="area"></div>
+    <nav class="main-menu">
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="fa fa-home fa-2x"></i>
+                    <span class="nav-text">
+                        Home
+                    </span>
+                </a>
+            </li>
+        </ul>
+
+        <ul class="logout">
+            <li>
+                <a href="#">
+                    <i class="fa fa-power-off fa-2x"></i>
+                    <span class="nav-text">
+                        Logout
+                    </span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Notepad</h1>
+
+    <center>
+
+        <div class="chat-container">
+            <div class="message" ng-repeat="message in messages">{{ message }}</div>
+        </div>
+
+        <div class="container">
+            <input type="text" class="text-box" placeholder="Type your note..." ng-model="newMessage">
+            <button class="send-button" ng-click="sendMessage()">Send</button>
+        </div>
+
+    </center>
+
+    <script>
+        angular.module('ChatApp', [])
+            .controller('ChatController', ['$scope', function ($scope) {
+                $scope.messages = [];
+                $scope.newMessage = '';
+
+                $scope.sendMessage = function () {
+                    if ($scope.newMessage.trim() !== '') {
+                        const messageNumber = $scope.messages.length + 1;
+                        $scope.messages.push(messageNumber + '. ' + $scope.newMessage);
+                        $scope.newMessage = '';
+                    }
+                };
+            }]);
+    </script>
+</body>
+
+</html>
